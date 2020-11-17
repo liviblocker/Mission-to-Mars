@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_pymongo import PyMongo
 import scraping
+import os
 
 app = Flask(__name__)
 
@@ -15,10 +16,11 @@ def index():
 
 @app.route("/scrape")
 def scrape():
-   mars = mongo.db.mars
+   #mars = mongo.db.mars
    mars_data = scraping.scrape_all()
-   mars.update({}, mars_data, upsert=True)
-   return "Scraping Successful!"
+   #mars.update({}, mars_data, upsert=True)
+   return render_template("index.html", image_url=mars_data["image_url"])
+   #return "Scraping Successful!"
 
 if __name__ == "__main__":
    app.run()
